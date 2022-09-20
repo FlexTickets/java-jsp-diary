@@ -13,19 +13,19 @@ services:
     deploy:
       placement:
         constraints: [node.role == worker]
-    secrets:
-      - db_name
-      - db_app_username
-      - db_app_password
+#    secrets:
+#      - db_name
+#      - db_app_username
+#      - db_app_password
     environment:
-      MYSQL_DATABASE_FILE: /run/secrets/db_name
-      MYSQL_USER_FILE: /run/secrets/db_app_username
-      MYSQL_PASSWORD_FILE: /run/secrets/db_app_password
+      MYSQL_DATABASE: jspDiary
+      MYSQL_USER: jspdiary
+      MYSQL_PASSWORD: jspdiary
 
-secrets:
-  db_name:
-    external: true
-  db_app_username:
-    external: true
-  db_app_password:
-    external: true
+#secrets:
+#  db_name:
+#    external: true
+#  db_app_username:
+#    external: true
+#  db_app_password:
+#    external: true
