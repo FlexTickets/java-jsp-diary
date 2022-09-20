@@ -1,0 +1,53 @@
+# docker stack deploy -c mysql-stack.yml mysql_stack
+
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-character-set-client-handshake --innodb_file_per_table=1 --explicit_defaults_for_timestamp=1
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - 3306:3306
+    volumes:
+      - type: bind
+        source: /var/docker/mysql/data
+        target: /var/lib/mysql
+      - type: bind
+        source: /var/docker/mysql/log
+        target: /var/log
+      - type: bind
+        source: /var/docker/mysql/entrypoint-initdb.d
+        target: /docker-entrypoint-initdb.d
+    configs:
+      - source: mysqld.cnf
+        target: /etc/my.cnf
+        uid: '0'
+        gid: '0'
+        mode: 0644
+    secrets:
+      - db_root_password
+      - db_name
+      - db_app_username
+      - db_app_password
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_DATABASE_FILE: /run/secrets/db_name
+      MYSQL_USER_FILE: /run/secrets/db_app_username
+      MYSQL_PASSWORD_FILE: /run/secrets/db_app_password
+
+configs:
+  mysqld.cnf:
+    external: true
+secrets:
+  db_root_password:
+    external: true
+  db_name:
+    external: true
+  db_app_username:
+    external: true
+  db_app_password:
+    external: true
+
