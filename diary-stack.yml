@@ -9,7 +9,6 @@ services:
       - "8081:8080"
     extra_hosts:
       - "db-server: 172.31.6.45"
-      - "portainer.flexpay.com.ua: 172.31.6.45"
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -18,6 +17,7 @@ services:
 #      - db_app_username
 #      - db_app_password
     environment:
+      MYSQL_SERVER: db-server
       MYSQL_DATABASE: jspDiary
       MYSQL_USER: jspdiary
       MYSQL_PASSWORD: jspdiary
