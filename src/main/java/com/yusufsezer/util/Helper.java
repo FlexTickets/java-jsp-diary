@@ -20,7 +20,7 @@ public class Helper {
     public static String VIEW_FOLDER = "WEB-INF/view";
     public static String NOT_FOUND = "notfound.jsp";
     public static String MYSQL_ROOT_PASSWORD = "MYSQL_ROOT_PASSWORD";
-    public static String DB_SOURCE = "jdbc:mysql://(host=db-server,port=3306,user=" + System.getenv("MYSQL_USER") + ",password=" 
+    public static String DB_SOURCE = "jdbc:mysql://(host=" + System.getenv("MYSQL_SERVER") + ",port=3306,user=" + System.getenv("MYSQL_USER") + ",password=" 
 	+ System.getenv("MYSQL_PASSWORD") + ",useSSL=false)/" + System.getenv("MYSQL_DATABASE");
     private static IDatabase DATABASE = null;
 
